@@ -8,7 +8,7 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- enable property injection -->
-    <context:property-placeholder location="classpath:datasource.properties"/>
+    <context:property-placeholder  location="classpath:datasource.properties"/>
 
     <!-- configure entity manager factory with jpa adapter-->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

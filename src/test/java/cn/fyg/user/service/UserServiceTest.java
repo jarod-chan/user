@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import cn.fyg.user.domain.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext-jpaAdapter.xml")
+@ContextConfiguration("classpath:applicationContext-persistenceProvider.xml")
 public class UserServiceTest {
 	
 	@Resource
@@ -59,6 +59,23 @@ public class UserServiceTest {
 		try{
 			userService.login(key, password);
 		}catch(UserException e){
+			assertNotNull(e);
+		}
+		
+	}
+	
+	@Test 
+	public void testSaveFail(){
+		User user1=new User();
+		user1.setUsername("user1");
+		user1.setRealname("陈");
+		user1.setPassword("pwd");
+		user1.setEmail("user1gmail.com");
+		user1.setCellphone("3811112222");
+		try {
+			userService.saveUser(user1);
+		} catch (UserException e) {
+			System.out.println(e.getMessage());
 			assertNotNull(e);
 		}
 		
