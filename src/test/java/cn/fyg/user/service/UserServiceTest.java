@@ -23,29 +23,31 @@ public class UserServiceTest {
 	public void testSave(){
 		User user1=new User();
 		user1.setUsername("user1");
-		user1.setRealname("陈");
-		user1.setPassword("pwd1");
+		user1.setRealname("陈1");
+		user1.setPassword("pwd111");
 		user1.setEmail("user1@gmail.com");
-		user1.setCellphone("139111122222");
+		user1.setCellphone("13811112222");
 		userService.saveUser(user1);
 		
 		User user2=new User();
 		user2.setUsername("user2");
-		user2.setRealname("周");
-		user2.setPassword("pwd2");
+		user2.setRealname("周2");
+		user2.setPassword("pwd222");
 		user2.setEmail("user2@gmail.com");
-		user2.setCellphone("13911113333");
-		userService.saveUser(user2);
+		user2.setCellphone("13812341234");
+		user2=userService.saveUser(user2);
 		
 		assertNotNull(userService.findById(1L));
 		assertNotNull(userService.findById(2L));
 		
+		
+		userService.saveUser(user2);
 	}
 	
 	@Test
 	public void login(){
 		String key="user1";
-		String password="pwd1";
+		String password="pwd111";
 		Long  id=userService.login(key, password);
 		assertNotNull(id);
 	}
