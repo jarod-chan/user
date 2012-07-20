@@ -1,5 +1,6 @@
 package cn.fyg.user.infrastructure.persistence.jpa;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,10 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import cn.fyg.user.infrastructure.query.impl.User;
-import cn.fyg.user.infrastructure.query.impl.UserRepository;
-import cn.fyg.user.infrastructure.query.impl.User_;
-import demo.impl.QueryItem;
+import cn.fyg.user.domain.model.User;
+import cn.fyg.user.domain.model.UserRepository;
+import cn.fyg.user.domain.model.User_;
+import cn.fyg.user.infrastructure.query.impl.QueryItem;
 
 @Repository
 public class UserRepositoryJpa implements UserRepository{

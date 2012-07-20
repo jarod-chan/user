@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.fyg.user.infrastructure.query.impl.User;
-import cn.fyg.user.infrastructure.query.impl.UserRepository;
-import cn.fyg.user.infrastructure.query.impl.UserValidator;
+import cn.fyg.user.domain.model.User;
+import cn.fyg.user.domain.model.UserRepository;
+import cn.fyg.user.domain.model.UserValidator;
 import cn.fyg.user.service.UserException;
 import cn.fyg.user.service.UserQuery;
 import cn.fyg.user.service.UserService;

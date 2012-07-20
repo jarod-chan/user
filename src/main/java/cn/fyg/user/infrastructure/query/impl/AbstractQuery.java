@@ -1,4 +1,4 @@
-package demo.impl;
+package cn.fyg.user.infrastructure.query.impl;
 
 import java.util.ArrayList;
 import java.util.List;

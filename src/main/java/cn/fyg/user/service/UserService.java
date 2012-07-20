@@ -1,6 +1,6 @@
 package cn.fyg.user.service;
 
-import cn.fyg.user.infrastructure.query.impl.User;
+import cn.fyg.user.domain.model.User;
 
 public interface UserService {
 	

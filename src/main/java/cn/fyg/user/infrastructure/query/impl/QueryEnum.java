@@ -1,4 +1,4 @@
-package demo.impl;
+package cn.fyg.user.infrastructure.query.impl;
 
 public enum QueryEnum {
 	

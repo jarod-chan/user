@@ -1,10 +1,10 @@
 package cn.fyg.user.service.impl;
 
+import cn.fyg.user.domain.model.User;
+import cn.fyg.user.domain.model.User_;
 import cn.fyg.user.infrastructure.query.QueryExecutor;
-import cn.fyg.user.infrastructure.query.impl.User;
-import cn.fyg.user.infrastructure.query.impl.User_;
+import cn.fyg.user.infrastructure.query.impl.AbstractQuery;
 import cn.fyg.user.service.UserQuery;
-import demo.impl.AbstractQuery;
 
 public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements UserQuery {
 	

@@ -1,8 +1,10 @@
 package cn.fyg.user.infrastructure.query;
 
+
 import java.util.List;
 
-import demo.impl.QueryItem;
+import cn.fyg.user.infrastructure.query.impl.QueryItem;
+
 
 
 

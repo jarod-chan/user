@@ -1,4 +1,4 @@
-package cn.fyg.user.infrastructure.query.impl;
+package cn.fyg.user.domain.model;
 
 import cn.fyg.user.infrastructure.validate.ValidateUtil;
 import cn.fyg.user.service.UserException;
