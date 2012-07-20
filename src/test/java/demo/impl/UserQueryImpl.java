@@ -13,13 +13,9 @@ import demo.QueryExecutor;
 import demo.QueryItem;
 import demo.UserQuery;
 
-public class UserQueryImpl implements UserQuery {
+public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements UserQuery {
 	
-	List<QueryItem> queryItems=new ArrayList<QueryItem>();
-	
-	String attribute;
-	
-	QueryExecutor<User> queryExecutor;
+
 	
 	public UserQueryImpl(QueryExecutor<User> queryExecutor){
 		this.queryExecutor=queryExecutor;
@@ -49,29 +45,8 @@ public class UserQueryImpl implements UserQuery {
 		return this;
 	}
 
-	@Override
-	public UserQuery like(Object obj) {
-		queryItems.add(new QueryItem(QueryEnum.LIKE,this.attribute,obj));
-		return this;
-	}
 
-	@Override
-	public UserQuery equal(Object obj) {
-		queryItems.add(new QueryItem(QueryEnum.EQUAL,this.attribute,obj));
-		return this;
-	}
-
-	@Override
-	public UserQuery asc() {
-		queryItems.add(new QueryItem(QueryEnum.ASC,this.attribute));
-		return this;
-	}
-
-	@Override
-	public UserQuery desc() {
-		queryItems.add(new QueryItem(QueryEnum.DESC,this.attribute));
-		return this;
-	}
+	
 
 	@Override
 	public List<User> list() {
