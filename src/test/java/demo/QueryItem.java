@@ -1,24 +1,29 @@
-package demo.impl;
+package demo;
 
-import javax.persistence.metamodel.SingularAttribute;
+
 
 public class QueryItem {
 
 	private QueryEnum queryEnum;
-	private SingularAttribute<?, ?> attribute;
+	private String attribute;
 	private Object value;
 	
-	public QueryItem(QueryEnum queryEnum, SingularAttribute<?, ?> attribute,Object value) {
+	public QueryItem(QueryEnum queryEnum, String attribute,Object value) {
 		this.queryEnum = queryEnum;
 		this.attribute = attribute;
 		this.value=value;
+	}
+	
+	public QueryItem(QueryEnum queryEnum, String attribute) {
+		this.queryEnum = queryEnum;
+		this.attribute = attribute;
 	}
 
 	public QueryEnum queryEnum() {
 		return queryEnum;
 	}
 
-	public SingularAttribute<?, ?> attribute() {
+	public String attribute() {
 		return attribute;
 	}
 

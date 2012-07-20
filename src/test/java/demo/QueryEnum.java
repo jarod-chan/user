@@ -1,4 +1,4 @@
-package demo.impl;
+package demo;
 
 public enum QueryEnum {
 	

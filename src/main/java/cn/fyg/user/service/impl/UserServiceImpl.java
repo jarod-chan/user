@@ -8,23 +8,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.fyg.user.domain.model.User;
-import cn.fyg.user.domain.model.UserQuery;
 import cn.fyg.user.domain.model.UserRepository;
 import cn.fyg.user.domain.model.UserValidator;
 import cn.fyg.user.service.UserException;
 import cn.fyg.user.service.UserService;
+import demo.UserQuery;
+import demo.impl.UserQueryImpl;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
 	@Resource
 	UserRepository userRepository;
-	@Resource
-	UserQuery userQuery;
+
 
 	@Override
 	public Long login(String key, String password) {
-		List<User> users=userQuery.findByKey(key);
+		List<User> users=userRepository.findByKey(key);
 		if(users.isEmpty()){
 			throw new UserException(String.format("can't find user by key:%s",key));
 		}else if(users.size()>1){
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public User saveUser(User user) {
 		UserValidator.validate(user);
-		if(userQuery.multiUser(user)){
+		if(userRepository.multiUser(user)){
 			throw new UserException("存在重复账户");
 		}
 		return userRepository.save(user);
@@ -53,6 +53,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User findById(Long id) {
 		return userRepository.find(id);
+	}
+
+	@Override
+	public UserQuery createQuery() {
+		return new UserQueryImpl(userRepository);
 	}
 
 }

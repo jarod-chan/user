@@ -1,10 +1,9 @@
 package demo;
 
-import java.util.List;
-
 import cn.fyg.user.domain.model.User;
 
-public interface UserQuery {
+
+public interface UserQuery extends Query<UserQuery,User>  {
 	
 	UserQuery username();
 
@@ -13,15 +12,5 @@ public interface UserQuery {
 	UserQuery email();
 
 	UserQuery cellphone();
-	
-	UserQuery like(Object obj);
-	
-	UserQuery equal(Object obj);
-	
-	UserQuery asc();
-	
-	UserQuery desc();
-	
-	List<User> list();
 	
 }

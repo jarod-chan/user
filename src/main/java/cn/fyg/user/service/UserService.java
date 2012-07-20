@@ -1,6 +1,7 @@
 package cn.fyg.user.service;
 
 import cn.fyg.user.domain.model.User;
+import demo.UserQuery;
 
 public interface UserService {
 	
@@ -30,6 +31,6 @@ public interface UserService {
 	 */
 	User saveUser(User user);
 	
-	
+	UserQuery createQuery();
 	
 }

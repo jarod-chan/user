@@ -1,6 +1,8 @@
 package cn.fyg.user.service;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
+
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -10,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import cn.fyg.user.domain.model.User;
+import demo.UserQuery;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-persistenceProvider.xml")
@@ -79,6 +82,15 @@ public class UserServiceTest {
 			assertNotNull(e);
 		}
 		
+	}
+	
+	@Test
+	public void testQuery(){
+		List<User> users=userService.createQuery()
+				.username().like("use%").equal("user").desc()
+				.cellphone().equal("123").asc()
+				.list();
+		assertTrue(users.isEmpty());
 	}
 	
 
