@@ -1,4 +1,4 @@
-package demo;
+package cn.fyg.user.infrastructure.query;
 
 import java.util.List;
 

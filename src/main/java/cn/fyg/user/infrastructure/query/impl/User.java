@@ -1,4 +1,4 @@
-package cn.fyg.user.domain.model;
+package cn.fyg.user.infrastructure.query.impl;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

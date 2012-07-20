@@ -1,24 +1,16 @@
-package demo.impl;
+package cn.fyg.user.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.metamodel.SingularAttribute;
-
-import cn.fyg.user.domain.model.User;
-import cn.fyg.user.domain.model.User_;
-import demo.Query;
-import demo.QueryEnum;
-import demo.QueryExecutor;
-import demo.QueryItem;
-import demo.UserQuery;
+import cn.fyg.user.infrastructure.query.QueryExecutor;
+import cn.fyg.user.infrastructure.query.impl.User;
+import cn.fyg.user.infrastructure.query.impl.User_;
+import cn.fyg.user.service.UserQuery;
+import demo.impl.AbstractQuery;
 
 public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements UserQuery {
 	
 
-	
 	public UserQueryImpl(QueryExecutor<User> queryExecutor){
-		this.queryExecutor=queryExecutor;
+		super(queryExecutor);
 	}
 
 	@Override
@@ -43,14 +35,6 @@ public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements User
 	public UserQuery cellphone() {
 		this.attribute=User_.cellphone.getName();
 		return this;
-	}
-
-
-	
-
-	@Override
-	public List<User> list() {
-		return queryExecutor.execute(queryItems);
 	}
 
 }

@@ -1,7 +1,6 @@
 package cn.fyg.user.service;
 
-import cn.fyg.user.domain.model.User;
-import demo.UserQuery;
+import cn.fyg.user.infrastructure.query.impl.User;
 
 public interface UserService {
 	
@@ -31,6 +30,10 @@ public interface UserService {
 	 */
 	User saveUser(User user);
 	
+	/**
+	 * 查询用户
+	 * @return
+	 */
 	UserQuery createQuery();
 	
 }

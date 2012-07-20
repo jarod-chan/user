@@ -1,8 +1,9 @@
-package cn.fyg.user.domain.model;
+package cn.fyg.user.infrastructure.query.impl;
 
 import java.util.List;
 
-import demo.QueryExecutor;
+import cn.fyg.user.infrastructure.query.QueryExecutor;
+
 
 
 public interface UserRepository extends QueryExecutor<User> {

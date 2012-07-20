@@ -11,7 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cn.fyg.user.domain.model.User;
+import cn.fyg.user.infrastructure.query.impl.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-persistenceProvider.xml")
@@ -90,7 +90,9 @@ public class UserServiceTest {
 				.cellphone().equal("123").asc()
 				.list();
 		assertTrue(users.isEmpty());
+		List<User> user2=userService.createQuery().username().equal("user1")
+				.list();
+		assertNotNull(user2.get(0));
 	}
 	
-
 }

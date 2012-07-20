@@ -13,10 +13,10 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import cn.fyg.user.domain.model.User;
-import cn.fyg.user.domain.model.UserRepository;
-import cn.fyg.user.domain.model.User_;
-import demo.QueryItem;
+import cn.fyg.user.infrastructure.query.impl.User;
+import cn.fyg.user.infrastructure.query.impl.UserRepository;
+import cn.fyg.user.infrastructure.query.impl.User_;
+import demo.impl.QueryItem;
 
 @Repository
 public class UserRepositoryJpa implements UserRepository{
