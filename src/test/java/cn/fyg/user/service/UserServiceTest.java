@@ -37,7 +37,7 @@ public class UserServiceTest {
 		user2.setPassword("pwd222");
 		user2.setEmail("user2@gmail.com");
 		user2.setCellphone("13812341234");
-		user2=userService.saveUser(user2);
+		userService.saveUser(user2);
 		
 		assertNotNull(userService.findById(1L));
 		assertNotNull(userService.findById(2L));

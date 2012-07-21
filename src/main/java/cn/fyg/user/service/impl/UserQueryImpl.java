@@ -4,6 +4,7 @@ import cn.fyg.user.domain.model.User;
 import cn.fyg.user.domain.model.User_;
 import cn.fyg.user.infrastructure.query.QueryExecutor;
 import cn.fyg.user.infrastructure.query.impl.AbstractQuery;
+import cn.fyg.user.service.IUser;
 import cn.fyg.user.service.UserQuery;
 
 public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements UserQuery {

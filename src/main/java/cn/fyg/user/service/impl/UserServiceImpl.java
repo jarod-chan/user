@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.fyg.user.domain.model.User;
 import cn.fyg.user.domain.model.UserRepository;
 import cn.fyg.user.domain.model.UserValidator;
+import cn.fyg.user.service.IUser;
 import cn.fyg.user.service.UserException;
 import cn.fyg.user.service.UserQuery;
 import cn.fyg.user.service.UserService;
@@ -41,7 +42,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public User saveUser(User user) {
+	public User saveUser(IUser iuser) {
+		User user=(User)iuser;
 		UserValidator.validate(user);
 		if(userRepository.multiUser(user)){
 			throw new UserException("存在重复账户");
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User findById(Long id) {
+	public IUser findById(Long id) {
 		return userRepository.find(id);
 	}
 

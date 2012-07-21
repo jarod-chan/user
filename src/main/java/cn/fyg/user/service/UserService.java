@@ -19,7 +19,7 @@ public interface UserService {
 	 * @param id
 	 * @return User
 	 */
-	User findById(Long id);
+	IUser findById(Long id);
 	
 	
 	/**
@@ -28,7 +28,7 @@ public interface UserService {
 	 * @return User
 	 * @throws UserException 如果保存失败，则抛出UserException
 	 */
-	User saveUser(User user);
+	IUser saveUser(IUser iuser);
 	
 	/**
 	 * 查询用户

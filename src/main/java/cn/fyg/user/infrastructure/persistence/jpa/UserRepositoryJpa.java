@@ -18,6 +18,7 @@ import cn.fyg.user.domain.model.User;
 import cn.fyg.user.domain.model.UserRepository;
 import cn.fyg.user.domain.model.User_;
 import cn.fyg.user.infrastructure.query.impl.QueryItem;
+import cn.fyg.user.service.IUser;
 
 @Repository
 public class UserRepositoryJpa implements UserRepository{

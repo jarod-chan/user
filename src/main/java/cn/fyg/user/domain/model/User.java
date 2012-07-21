@@ -5,13 +5,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import cn.fyg.user.service.IUser;
+
 import net.sf.oval.constraint.Email;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 import net.sf.oval.constraint.NotNull;
 
 @Entity
-public class User {
+public class User implements IUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
