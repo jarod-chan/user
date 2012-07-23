@@ -1,11 +1,11 @@
-package cn.fyg.user.domain.model;
+package cn.fyg.module.user.domain.impl;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.fyg.user.service.IUser;
+import cn.fyg.module.user.domain.User;
 
 import net.sf.oval.constraint.Email;
 import net.sf.oval.constraint.Length;
@@ -13,7 +13,7 @@ import net.sf.oval.constraint.MatchPattern;
 import net.sf.oval.constraint.NotNull;
 
 @Entity
-public class User implements IUser {
+public class UserEntity implements User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

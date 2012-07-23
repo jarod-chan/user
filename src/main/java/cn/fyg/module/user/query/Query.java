@@ -1,4 +1,4 @@
-package cn.fyg.user.infrastructure.query;
+package cn.fyg.module.user.query;
 
 import java.util.List;
 

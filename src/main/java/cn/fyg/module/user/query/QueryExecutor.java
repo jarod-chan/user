@@ -1,9 +1,9 @@
-package cn.fyg.user.infrastructure.query;
+package cn.fyg.module.user.query;
 
 
 import java.util.List;
 
-import cn.fyg.user.infrastructure.query.impl.QueryItem;
+import cn.fyg.module.user.query.impl.QueryItem;
 
 
 

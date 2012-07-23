@@ -1,6 +1,7 @@
-package cn.fyg.user.service;
+package cn.fyg.module.user;
 
-import cn.fyg.user.domain.model.User;
+import cn.fyg.module.user.domain.UserQuery;
+import cn.fyg.module.user.domain.User;
 
 public interface UserService {
 	
@@ -19,7 +20,7 @@ public interface UserService {
 	 * @param id
 	 * @return User
 	 */
-	IUser findById(Long id);
+	User findById(Long id);
 	
 	
 	/**
@@ -28,7 +29,7 @@ public interface UserService {
 	 * @return User
 	 * @throws UserException 如果保存失败，则抛出UserException
 	 */
-	IUser saveUser(IUser iuser);
+	User saveUser(User iuser);
 	
 	/**
 	 * 查询用户

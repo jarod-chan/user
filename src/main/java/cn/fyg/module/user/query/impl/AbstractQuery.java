@@ -1,10 +1,10 @@
-package cn.fyg.user.infrastructure.query.impl;
+package cn.fyg.module.user.query.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.fyg.user.infrastructure.query.Query;
-import cn.fyg.user.infrastructure.query.QueryExecutor;
+import cn.fyg.module.user.query.Query;
+import cn.fyg.module.user.query.QueryExecutor;
 
 
 public abstract class AbstractQuery<T,U> implements Query<T,U> {

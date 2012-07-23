@@ -1,7 +1,7 @@
-package cn.fyg.user.service;
+package cn.fyg.module.user.domain;
 
 
-public interface IUser{
+public interface User{
 
 	Long getId();
 

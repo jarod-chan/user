@@ -1,6 +1,7 @@
 package cn.fyg.user.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
@@ -11,7 +12,11 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cn.fyg.user.domain.model.User;
+
+import cn.fyg.module.user.UserException;
+import cn.fyg.module.user.UserService;
+import cn.fyg.module.user.domain.User;
+import cn.fyg.module.user.domain.impl.UserEntity;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-persistenceProvider.xml")
@@ -23,7 +28,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void testSave(){
-		User user1=new User();
+		User user1=new UserEntity();
 		user1.setUsername("user1");
 		user1.setRealname("陈1");
 		user1.setPassword("pwd111");
@@ -31,7 +36,7 @@ public class UserServiceTest {
 		user1.setCellphone("13811112222");
 		userService.saveUser(user1);
 		
-		User user2=new User();
+		UserEntity user2=new UserEntity();
 		user2.setUsername("user2");
 		user2.setRealname("周2");
 		user2.setPassword("pwd222");
@@ -68,7 +73,7 @@ public class UserServiceTest {
 	
 	@Test 
 	public void testSaveFail(){
-		User user1=new User();
+		UserEntity user1=new UserEntity();
 		user1.setUsername("user1");
 		user1.setRealname("陈");
 		user1.setPassword("pwd");
@@ -85,12 +90,12 @@ public class UserServiceTest {
 	
 	@Test
 	public void testQuery(){
-		List<User> users=userService.createQuery()
+		List<UserEntity> users=userService.createQuery()
 				.username().like("use%").equal("user").desc()
 				.cellphone().equal("123").asc()
 				.list();
 		assertTrue(users.isEmpty());
-		List<User> user2=userService.createQuery().username().equal("user1")
+		List<UserEntity> user2=userService.createQuery().username().equal("user1")
 				.list();
 		assertNotNull(user2.get(0));
 	}

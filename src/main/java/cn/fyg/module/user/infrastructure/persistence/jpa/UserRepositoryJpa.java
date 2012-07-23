@@ -1,4 +1,4 @@
-package cn.fyg.user.infrastructure.persistence.jpa;
+package cn.fyg.module.user.infrastructure.persistence.jpa;
 
 
 import java.util.ArrayList;
@@ -14,11 +14,10 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import cn.fyg.user.domain.model.User;
-import cn.fyg.user.domain.model.UserRepository;
-import cn.fyg.user.domain.model.User_;
-import cn.fyg.user.infrastructure.query.impl.QueryItem;
-import cn.fyg.user.service.IUser;
+import cn.fyg.module.user.domain.impl.UserEntity;
+import cn.fyg.module.user.domain.impl.UserEntity_;
+import cn.fyg.module.user.domain.impl.UserRepository;
+import cn.fyg.module.user.query.impl.QueryItem;
 
 @Repository
 public class UserRepositoryJpa implements UserRepository{
@@ -27,12 +26,12 @@ public class UserRepositoryJpa implements UserRepository{
 	private EntityManager entityManager;
 
 	@Override
-	public User find(Long id) {
-		return entityManager.find(User.class, id);
+	public UserEntity find(Long id) {
+		return entityManager.find(UserEntity.class, id);
 	}
 	
 	@Override
-	public User save(User user) {
+	public UserEntity save(UserEntity user) {
 		if(user.getId()==null){
 			entityManager.persist(user);
 			return user;
@@ -41,39 +40,39 @@ public class UserRepositoryJpa implements UserRepository{
 	}
 	
 	@Override
-	public List<User> findByKey(String key) {
+	public List<UserEntity> findByKey(String key) {
 		CriteriaBuilder builder=entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> query = builder.createQuery(User.class);
-		Root<User> root = query.from(User.class);
-		Predicate criteria=builder.equal(root.get(User_.username), key);
-		criteria=builder.or(criteria,builder.equal(root.get(User_.email), key));
-		criteria=builder.or(criteria,builder.equal(root.get(User_.cellphone), key));
+		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
+		Root<UserEntity> root = query.from(UserEntity.class);
+		Predicate criteria=builder.equal(root.get(UserEntity_.username), key);
+		criteria=builder.or(criteria,builder.equal(root.get(UserEntity_.email), key));
+		criteria=builder.or(criteria,builder.equal(root.get(UserEntity_.cellphone), key));
 		query.where(criteria);
-		query.orderBy(builder.asc(root.get(User_.id)));
+		query.orderBy(builder.asc(root.get(UserEntity_.id)));
 		return entityManager.createQuery(query).getResultList();
 	}
 
 	@Override
-	public boolean multiUser(User user) {
+	public boolean multiUser(UserEntity user) {
 		CriteriaBuilder builder=entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> query = builder.createQuery(User.class);
-		Root<User> root = query.from(User.class);
-		Predicate criteria=builder.equal(root.get(User_.username), user.getUsername());
-		criteria=builder.or(criteria,builder.equal(root.get(User_.email), user.getEmail()));
-		criteria=builder.or(criteria,builder.equal(root.get(User_.cellphone), user.getCellphone()));
+		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
+		Root<UserEntity> root = query.from(UserEntity.class);
+		Predicate criteria=builder.equal(root.get(UserEntity_.username), user.getUsername());
+		criteria=builder.or(criteria,builder.equal(root.get(UserEntity_.email), user.getEmail()));
+		criteria=builder.or(criteria,builder.equal(root.get(UserEntity_.cellphone), user.getCellphone()));
 		if(user.getId()!=null){
-			criteria=builder.and(criteria,builder.notEqual(root.get(User_.id), user.getId()));
+			criteria=builder.and(criteria,builder.notEqual(root.get(UserEntity_.id), user.getId()));
 		}
 		query.where(criteria);
-		List<User> list = entityManager.createQuery(query).getResultList();
+		List<UserEntity> list = entityManager.createQuery(query).getResultList();
 		return !list.isEmpty();
 	}
 
 	@Override
-	public List<User> execute(List<QueryItem> queryItems) {
+	public List<UserEntity> execute(List<QueryItem> queryItems) {
 		CriteriaBuilder builder=entityManager.getCriteriaBuilder();
-		CriteriaQuery<User> query = builder.createQuery(User.class);
-		Root<User> root = query.from(User.class);
+		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
+		Root<UserEntity> root = query.from(UserEntity.class);
 		List<Predicate> criterias=new ArrayList<Predicate>();
 		List<Order> orders=new ArrayList<Order>();
 		for (QueryItem queryItem : queryItems) {

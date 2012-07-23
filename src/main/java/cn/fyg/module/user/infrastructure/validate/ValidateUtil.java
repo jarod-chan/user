@@ -1,4 +1,4 @@
-package cn.fyg.user.infrastructure.validate;
+package cn.fyg.module.user.infrastructure.validate;
 
 import java.util.List;
 
