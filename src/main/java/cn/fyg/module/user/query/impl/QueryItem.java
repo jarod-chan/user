@@ -2,6 +2,7 @@ package cn.fyg.module.user.query.impl;
 
 
 
+
 public class QueryItem {
 
 	private QueryEnum queryEnum;

@@ -8,24 +8,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import cn.fyg.module.user.User;
 import cn.fyg.module.user.UserException;
+import cn.fyg.module.user.UserQuery;
 import cn.fyg.module.user.UserService;
-import cn.fyg.module.user.domain.User;
-import cn.fyg.module.user.domain.UserQuery;
-import cn.fyg.module.user.domain.impl.UserEntity;
-import cn.fyg.module.user.domain.impl.UserRepository;
-import cn.fyg.module.user.domain.impl.UserValidator;
+import cn.fyg.module.user.impl.domain.UserEntity;
+import cn.fyg.module.user.impl.domain.UserEntityRepository;
+import cn.fyg.module.user.impl.domain.UserEntityValidator;
 
 @Service
 public class UserServiceImpl implements UserService{
 	
 	@Resource
-	UserRepository userRepository;
+	UserEntityRepository userEntityRepository;
+	
+	@Override
+	public User createUser(){ 
+		return new UserEntity();
+	}
 
 
 	@Override
-	public Long login(String key, String password) {
-		List<UserEntity> users=userRepository.findByKey(key);
+	public String login(String key, String password) {
+		List<UserEntity> users=userEntityRepository.findByKey(key);
 		if(users.isEmpty()){
 			throw new UserException(String.format("can't find user by key:%s",key));
 		}else if(users.size()>1){
@@ -45,21 +50,28 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	public UserEntity saveUser(User user) {
 		UserEntity userEntity=(UserEntity)user;
-		UserValidator.validate(userEntity);
-		if(userRepository.multiUser(userEntity)){
+		UserEntityValidator.validate(userEntity);
+		if(userEntityRepository.multiUser(userEntity)){
 			throw new UserException("存在重复账户");
 		}
-		return userRepository.save(userEntity);
+		return userEntityRepository.save(userEntity);
 	}
 
 	@Override
-	public UserEntity findById(Long id) {
-		return userRepository.find(id);
+	public UserEntity findById(String id) {
+		if(id==null){
+			throw new NullPointerException("id is null");
+		}
+		return userEntityRepository.find(Long.valueOf(id));
 	}
 
 	@Override
 	public UserQuery createQuery() {
-		return new UserQueryImpl(userRepository);
+		return new UserQueryImpl(userEntityRepository);
 	}
+
+
+
+	
 
 }

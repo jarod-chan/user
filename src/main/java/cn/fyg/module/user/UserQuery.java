@@ -1,10 +1,9 @@
-package cn.fyg.module.user.domain;
+package cn.fyg.module.user;
 
-import cn.fyg.module.user.domain.impl.UserEntity;
 import cn.fyg.module.user.query.Query;
 
 
-public interface UserQuery extends Query<UserQuery,UserEntity>  {
+public interface UserQuery extends Query<UserQuery,User>  {
 	
 	UserQuery username();
 

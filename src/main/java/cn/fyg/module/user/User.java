@@ -1,11 +1,11 @@
-package cn.fyg.module.user.domain;
+package cn.fyg.module.user;
 
 
 public interface User{
 
-	Long getId();
+	String getId();
 
-	void setId(Long id);
+	void setId(String id);
 
 	String getUsername();
 

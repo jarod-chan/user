@@ -1,9 +1,14 @@
 package cn.fyg.module.user;
 
-import cn.fyg.module.user.domain.UserQuery;
-import cn.fyg.module.user.domain.User;
 
 public interface UserService {
+	
+	
+	/**
+	 * 返回一个新建的User对象
+	 * @return User
+	 */
+	User createUser();
 	
 	/**
 	 * 校验用户登录名，用户密码
@@ -12,7 +17,7 @@ public interface UserService {
 	 * @return userid 用户id
 	 * @throws UserException 如果登录失败，则抛出UserException
 	 */
-	Long login(String key,String password);
+	String login(String key,String password);
 	
 
 	/**
@@ -20,7 +25,7 @@ public interface UserService {
 	 * @param id
 	 * @return User
 	 */
-	User findById(Long id);
+	User findById(String id);
 	
 	
 	/**
@@ -29,7 +34,7 @@ public interface UserService {
 	 * @return User
 	 * @throws UserException 如果保存失败，则抛出UserException
 	 */
-	User saveUser(User iuser);
+	User saveUser(User user);
 	
 	/**
 	 * 查询用户

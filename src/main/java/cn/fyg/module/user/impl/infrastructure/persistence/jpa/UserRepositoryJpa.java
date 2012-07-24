@@ -1,4 +1,4 @@
-package cn.fyg.module.user.infrastructure.persistence.jpa;
+package cn.fyg.module.user.impl.infrastructure.persistence.jpa;
 
 
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
-import cn.fyg.module.user.domain.impl.UserEntity;
-import cn.fyg.module.user.domain.impl.UserEntity_;
-import cn.fyg.module.user.domain.impl.UserRepository;
+import cn.fyg.module.user.impl.domain.UserEntity;
+import cn.fyg.module.user.impl.domain.UserEntityRepository;
+import cn.fyg.module.user.impl.domain.UserEntity_;
 import cn.fyg.module.user.query.impl.QueryItem;
 
 @Repository
-public class UserRepositoryJpa implements UserRepository{
+public class UserRepositoryJpa implements UserEntityRepository{
 	
 	@PersistenceContext
 	private EntityManager entityManager;

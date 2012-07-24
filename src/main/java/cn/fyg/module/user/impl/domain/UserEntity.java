@@ -1,11 +1,11 @@
-package cn.fyg.module.user.domain.impl;
+package cn.fyg.module.user.impl.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import cn.fyg.module.user.domain.User;
+import cn.fyg.module.user.User;
 
 import net.sf.oval.constraint.Email;
 import net.sf.oval.constraint.Length;
@@ -39,12 +39,17 @@ public class UserEntity implements User {
 	private String password;//用户密码
 
 
-	public Long getId() {
-		return id;
+	public String getId() {
+		if(id==null) return null;
+		return id.toString();
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setId(String id) {
+		if(id==null){
+			this.id=null;
+			return;
+		}
+		this.id = Long.valueOf(id);
 	}
 
 	public String getUsername() {

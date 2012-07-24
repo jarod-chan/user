@@ -1,10 +1,10 @@
-package cn.fyg.module.user.domain.impl;
+package cn.fyg.module.user.impl.domain;
 
 import cn.fyg.module.user.UserException;
-import cn.fyg.module.user.infrastructure.validate.ValidateUtil;
+import cn.fyg.module.user.impl.infrastructure.validate.ValidateUtil;
 
 
-public class UserValidator {
+public class UserEntityValidator {
 	
 
 	public static void validate(UserEntity user) {

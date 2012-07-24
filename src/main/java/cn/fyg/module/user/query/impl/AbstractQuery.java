@@ -13,9 +13,9 @@ public abstract class AbstractQuery<T,U> implements Query<T,U> {
 	
 	protected String attribute;
 	
-	protected QueryExecutor<U> queryExecutor;
+	protected QueryExecutor<? extends U> queryExecutor;
 	
-	public AbstractQuery(QueryExecutor<U> queryExecutor) {
+	public AbstractQuery(QueryExecutor<? extends U> queryExecutor) {
 		this.queryExecutor = queryExecutor;
 	}
 
@@ -54,7 +54,15 @@ public abstract class AbstractQuery<T,U> implements Query<T,U> {
 	
 	@Override
 	public List<U> list() {
-		return queryExecutor.execute(queryItems);
+		 List<? extends U> list = queryExecutor.execute(queryItems);
+		 if(!list.isEmpty()){
+			 List<U> retList=new ArrayList<U>(list.size());
+			 for (U u : list) {
+				 retList.add(u);
+			}
+			return retList;
+		 }
+		 return new ArrayList<U>();
 	}
 	
 }

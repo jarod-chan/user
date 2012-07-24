@@ -1,4 +1,4 @@
-package cn.fyg.module.user.domain.impl;
+package cn.fyg.module.user.impl.domain;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import cn.fyg.module.user.query.QueryExecutor;
 
 
 
-public interface UserRepository extends QueryExecutor<UserEntity> {
+public interface UserEntityRepository extends QueryExecutor<UserEntity> {
 
 	UserEntity find(Long id);
 	
