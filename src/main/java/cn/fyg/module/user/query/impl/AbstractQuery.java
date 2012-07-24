@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.fyg.module.user.query.Query;
+import cn.fyg.module.user.query.QueryEnum;
 import cn.fyg.module.user.query.QueryExecutor;
+import cn.fyg.module.user.query.QueryItem;
 
 
 public abstract class AbstractQuery<T,U> implements Query<T,U> {
@@ -15,13 +17,17 @@ public abstract class AbstractQuery<T,U> implements Query<T,U> {
 	
 	protected QueryExecutor<? extends U> queryExecutor;
 	
+	protected int firstValue=-1;
+	
+	protected int maxValue=-1;
+	
 	public AbstractQuery(QueryExecutor<? extends U> queryExecutor) {
 		this.queryExecutor = queryExecutor;
 	}
 
 	@Override
 	public T desc() {
-		queryItems.add(new QueryItem(QueryEnum.DESC,this.attribute));
+		queryItems.add(new QueryItem(QueryEnum.DESC,this.attribute,null));
 		@SuppressWarnings("unchecked")
 		T t= (T)this;
 		return t;
@@ -46,15 +52,50 @@ public abstract class AbstractQuery<T,U> implements Query<T,U> {
 
 	@Override
 	public T asc() {
-		queryItems.add(new QueryItem(QueryEnum.ASC,this.attribute));
+		queryItems.add(new QueryItem(QueryEnum.ASC,this.attribute,null));
 		@SuppressWarnings("unchecked")
 		T t= (T)this;
 		return t;
 	}
 	
 	@Override
+	public T first(int first){
+		if(first>=0){			
+			this.firstValue=first;
+		}
+		@SuppressWarnings("unchecked")
+		T t= (T)this;
+		return t;
+	}
+	
+	@Override
+	public T max(int max){
+		if(max>0){
+			this.maxValue=max;
+		}
+		@SuppressWarnings("unchecked")
+		T t= (T)this;
+		return t;
+	}
+	
+	@Override
+	public int first() {
+		return this.firstValue;
+	}
+	
+	@Override
+	public int max() {
+		return this.maxValue;
+	}
+	
+	@Override
+	public List<QueryItem> queryItems() {
+		return this.queryItems;
+	}
+	
+	@Override
 	public List<U> list() {
-		 List<? extends U> list = queryExecutor.execute(queryItems);
+		 List<? extends U> list = queryExecutor.executeList(queryItems);
 		 if(!list.isEmpty()){
 			 List<U> retList=new ArrayList<U>(list.size());
 			 for (U u : list) {

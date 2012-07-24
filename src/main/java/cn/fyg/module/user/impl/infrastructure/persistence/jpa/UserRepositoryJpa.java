@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Order;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import cn.fyg.module.user.impl.domain.UserEntity;
 import cn.fyg.module.user.impl.domain.UserEntityRepository;
 import cn.fyg.module.user.impl.domain.UserEntity_;
-import cn.fyg.module.user.query.impl.QueryItem;
+import cn.fyg.module.user.query.QueryItem;
 
 @Repository
 public class UserRepositoryJpa implements UserEntityRepository{
@@ -69,7 +70,7 @@ public class UserRepositoryJpa implements UserEntityRepository{
 	}
 
 	@Override
-	public List<UserEntity> execute(List<QueryItem> queryItems) {
+	public List<UserEntity> executeList(List<QueryItem> queryItems) {
 		CriteriaBuilder builder=entityManager.getCriteriaBuilder();
 		CriteriaQuery<UserEntity> query = builder.createQuery(UserEntity.class);
 		Root<UserEntity> root = query.from(UserEntity.class);
@@ -89,6 +90,8 @@ public class UserRepositoryJpa implements UserEntityRepository{
 				case DESC:
 					orders.add(builder.desc(root.get(queryItem.attribute())));	
 					break;
+				default:
+					break;
 			}
 		}
 		if(!criterias.isEmpty()){
@@ -101,7 +104,9 @@ public class UserRepositoryJpa implements UserEntityRepository{
 		if(!orders.isEmpty()){
 			query.orderBy(orders);
 		}
-		return entityManager.createQuery(query).getResultList();
+		TypedQuery<UserEntity> typedQuery = entityManager.createQuery(query);
+		
+		return typedQuery.getResultList();
 	}
 
 

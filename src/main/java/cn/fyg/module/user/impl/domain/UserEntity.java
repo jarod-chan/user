@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.apache.commons.lang.StringUtils;
 
 import cn.fyg.module.user.User;
 
@@ -11,6 +14,7 @@ import net.sf.oval.constraint.Email;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 import net.sf.oval.constraint.NotNull;
+import net.sf.oval.constraint.ValidateWithMethod;
 
 @Entity
 public class UserEntity implements User {
@@ -34,11 +38,69 @@ public class UserEntity implements User {
 	@MatchPattern(pattern = {"^(13[0-9]|15[^4]|18[6|8|9])\\d{8}$"},message="手机号码验证错误")
 	private String cellphone;//手机号码
 	
-	@NotNull(message="密码不能为空")
-	@Length(min=6,max=12,message="密码长度在{min}和{max}之间")
 	private String password;//用户密码
 
 	private Boolean enabled;
+	
+	@Transient
+	@ValidateWithMethod(methodName = "checkTempPasswor", parameterType = String.class,message="密码长度必须在6和12之间")
+	private String tempPassword;
+	
+	
+	public boolean checkTempPasswor(String tempPassword){
+		boolean result=false;
+		if(this.id==null){
+			result=checkBeforeCreate(tempPassword);
+		}else{
+			result=checkBeforeUpdate(tempPassword);
+		}
+		return result;
+	}
+
+	private boolean checkBeforeCreate(String tempPassword) {
+		if(tempPassword==null){
+			return false;
+		}
+		tempPassword=tempPassword.trim();
+		if(StringUtils.isBlank(tempPassword)){
+			return false;
+		}
+		if(tempPassword.length()<6||tempPassword.length()>12){
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean checkBeforeUpdate(String tempPassword) {
+		if(tempPassword==null){
+			return true;
+		}
+		tempPassword=tempPassword.trim();
+		if(StringUtils.isBlank(tempPassword)){
+			return false;
+		}
+		if(tempPassword.length()<6||tempPassword.length()>12){
+			return false;
+		}
+		return true;
+	}
+	
+	public void encryptionPassword(){
+		if(this.tempPassword!=null){
+			this.password=this.tempPassword;
+		}
+	}
+	
+	public boolean checkPassword(String comparePassword){
+		if(this.password==null){
+			return false;
+		}
+		if(comparePassword==null){
+			return false;
+		}
+		return this.password.equals(comparePassword);
+	}
+	
 
 	public String getId() {
 		if(id==null) return null;
@@ -90,7 +152,7 @@ public class UserEntity implements User {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.tempPassword = password;
 	}
 
 	public Boolean getEnabled() {

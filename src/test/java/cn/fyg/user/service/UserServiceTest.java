@@ -64,9 +64,9 @@ public class UserServiceTest {
 		try{
 			userService.login(key, password);
 		}catch(UserException e){
+			System.out.println(e.getMessage());
 			assertNotNull(e);
-		}
-		
+		}	
 	}
 	
 	@Test 
@@ -106,6 +106,18 @@ public class UserServiceTest {
 		userService.enableUser(id);
 		user = userService.findById(id);
 		assertTrue(user.isEnabled());
+	}
+	
+	@Test
+	public void testPassword(){
+		String id="1";
+		User user = userService.findById(id);
+		user.setPassword("pwd222");
+		userService.saveUser(user);
+		String key="user1";
+		String password="pwd222";
+		String retId=userService.login(key, password);
+		assertNotNull(retId);
 	}
 	
 }

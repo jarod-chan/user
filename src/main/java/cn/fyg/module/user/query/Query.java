@@ -2,6 +2,7 @@ package cn.fyg.module.user.query;
 
 import java.util.List;
 
+
 public interface Query<T,U> {
 
 	T asc();
@@ -12,6 +13,18 @@ public interface Query<T,U> {
 	
 	T equal(Object obj);
 	
+	T first(int first);
+	
+	T max(int max);
+	
+	int first();
+	
+	int max();
+	
+	List<QueryItem> queryItems();
+	
 	List<U> list();
+	
+	
 
 }

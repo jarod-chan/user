@@ -1,4 +1,4 @@
-package cn.fyg.module.user.query.impl;
+package cn.fyg.module.user.query;
 
 public enum QueryEnum {
 	
@@ -6,5 +6,4 @@ public enum QueryEnum {
 	EQUAL,
 	ASC,
 	DESC
-
 }

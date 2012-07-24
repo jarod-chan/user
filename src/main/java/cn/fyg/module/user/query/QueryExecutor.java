@@ -3,11 +3,10 @@ package cn.fyg.module.user.query;
 
 import java.util.List;
 
-import cn.fyg.module.user.query.impl.QueryItem;
 
 
-public interface QueryExecutor<T> {
+public interface QueryExecutor<U> {
 	
-	 List<T> execute(List<QueryItem> queryItems); 
+	 List<U> executeList(List<QueryItem> queryItems); 
 
 }

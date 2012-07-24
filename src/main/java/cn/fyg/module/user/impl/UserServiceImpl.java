@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
 			throw new UserException(String.format("find many user by key:%s",key));
 		}
 		UserEntity user=users.get(0);
-		if(!user.getPassword().equals(password)){
+		if(!user.checkPassword(password)){
 			throw new UserException(String.format("password not match key:%s password:%s", key,password));
 		}
 		return user.getId();
@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService{
 	public User saveUser(User user) {
 		UserEntity userEntity=(UserEntity)user;
 		UserEntityValidator.validate(userEntity);
+		userEntity.encryptionPassword();
 		if(userEntityRepository.multiUser(userEntity)){
 			throw new UserException("存在重复账户");
 		}
