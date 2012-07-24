@@ -11,6 +11,26 @@ public interface UserService {
 	User createUser();
 	
 	/**
+	 * 保存用户
+	 * @param user
+	 * @return User
+	 * @throws UserException 如果保存失败，则抛出UserException
+	 */
+	User saveUser(User user);
+	
+	/**
+	 * 启用一个用户
+	 * @param id
+	 */
+	void enableUser(String id); 
+	
+	/**
+	 * 禁用一个用户
+	 * @param id
+	 */
+	void disableUser(String id);
+	
+	/**
 	 * 校验用户登录名，用户密码
 	 * @param key 用户名、邮箱、电话号码
 	 * @param password 密码
@@ -19,22 +39,12 @@ public interface UserService {
 	 */
 	String login(String key,String password);
 	
-
 	/**
 	 * 根据用户id，返回用户信息
 	 * @param id
 	 * @return User
 	 */
 	User findById(String id);
-	
-	
-	/**
-	 * 保存用户
-	 * @param user
-	 * @return User
-	 * @throws UserException 如果保存失败，则抛出UserException
-	 */
-	User saveUser(User user);
 	
 	/**
 	 * 查询用户

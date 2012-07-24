@@ -13,6 +13,7 @@ import cn.fyg.module.user.UserException;
 import cn.fyg.module.user.UserQuery;
 import cn.fyg.module.user.UserService;
 import cn.fyg.module.user.impl.domain.UserEntity;
+import cn.fyg.module.user.impl.domain.UserEntityFactory;
 import cn.fyg.module.user.impl.domain.UserEntityRepository;
 import cn.fyg.module.user.impl.domain.UserEntityValidator;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User createUser(){ 
-		return new UserEntity();
+		return UserEntityFactory.createUserEntity();
 	}
 
 
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public UserEntity saveUser(User user) {
+	public User saveUser(User user) {
 		UserEntity userEntity=(UserEntity)user;
 		UserEntityValidator.validate(userEntity);
 		if(userEntityRepository.multiUser(userEntity)){
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public UserEntity findById(String id) {
+	public User findById(String id) {
 		if(id==null){
 			throw new NullPointerException("id is null");
 		}
@@ -68,6 +69,28 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public UserQuery createQuery() {
 		return new UserQueryImpl(userEntityRepository);
+	}
+
+
+	@Override
+	@Transactional
+	public void enableUser(String id) {
+		if(id==null){
+			throw new NullPointerException("id is null");
+		}
+		UserEntity userEntity = userEntityRepository.find(Long.valueOf(id));
+		userEntity.setEnabled(Boolean.TRUE);
+	}
+
+
+	@Override
+	@Transactional
+	public void disableUser(String id) {
+		if(id==null){
+			throw new NullPointerException("id is null");
+		}
+		UserEntity userEntity = userEntityRepository.find(Long.valueOf(id));
+		userEntity.setEnabled(Boolean.FALSE);
 	}
 
 

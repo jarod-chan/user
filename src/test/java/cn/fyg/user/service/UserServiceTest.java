@@ -1,7 +1,6 @@
 package cn.fyg.user.service;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -97,6 +96,16 @@ public class UserServiceTest {
 		List<User> user2=userService.createQuery().username().equal("user1")
 				.list();
 		assertNotNull(user2.get(0));
+	}
+	
+	@Test
+	public void testEnable(){
+		String id="1";
+		User user = userService.findById(id);
+		assertFalse(user.isEnabled());
+		userService.enableUser(id);
+		user = userService.findById(id);
+		assertTrue(user.isEnabled());
 	}
 	
 }

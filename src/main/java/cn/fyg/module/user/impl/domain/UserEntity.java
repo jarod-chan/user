@@ -38,6 +38,7 @@ public class UserEntity implements User {
 	@Length(min=6,max=12,message="密码长度在{min}和{max}之间")
 	private String password;//用户密码
 
+	private Boolean enabled;
 
 	public String getId() {
 		if(id==null) return null;
@@ -90,6 +91,19 @@ public class UserEntity implements User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled.booleanValue();
 	}
 	
 	
