@@ -2,7 +2,6 @@ package cn.fyg.module.user.impl;
 
 import cn.fyg.module.user.User;
 import cn.fyg.module.user.UserQuery;
-import cn.fyg.module.user.impl.domain.UserEntity;
 import cn.fyg.module.user.impl.domain.UserEntity_;
 import cn.fyg.module.user.query.QueryExecutor;
 import cn.fyg.module.user.query.impl.AbstractQuery;
@@ -10,7 +9,7 @@ import cn.fyg.module.user.query.impl.AbstractQuery;
 public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements UserQuery {
 	
 
-	public UserQueryImpl(QueryExecutor<UserEntity> queryExecutor){
+	public UserQueryImpl(QueryExecutor<UserQuery,User> queryExecutor){
 		super(queryExecutor);
 	}
 

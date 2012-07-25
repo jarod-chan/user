@@ -99,6 +99,12 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	public void testQuery2(){
+		List<User> users=userService.createQuery().username().like("u%").max(2).list();
+		assertEquals(2, users.size());
+	}
+	
+	@Test
 	public void testEnable(){
 		String id="1";
 		User user = userService.findById(id);

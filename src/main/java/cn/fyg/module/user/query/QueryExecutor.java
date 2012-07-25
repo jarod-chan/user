@@ -5,8 +5,7 @@ import java.util.List;
 
 
 
-public interface QueryExecutor<U> {
-	
-	 List<U> executeList(List<QueryItem> queryItems); 
+public interface QueryExecutor<T,U> {
 
+	List<? extends U> executList(T tQuery); 
 }

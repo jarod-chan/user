@@ -15,13 +15,13 @@ public abstract class AbstractQuery<T,U> implements Query<T,U> {
 	
 	protected String attribute;
 	
-	protected QueryExecutor<? extends U> queryExecutor;
+	protected QueryExecutor<T,U> queryExecutor;
 	
 	protected int firstValue=-1;
 	
 	protected int maxValue=-1;
 	
-	public AbstractQuery(QueryExecutor<? extends U> queryExecutor) {
+	public AbstractQuery(QueryExecutor<T, U> queryExecutor) {
 		this.queryExecutor = queryExecutor;
 	}
 
@@ -95,7 +95,8 @@ public abstract class AbstractQuery<T,U> implements Query<T,U> {
 	
 	@Override
 	public List<U> list() {
-		 List<? extends U> list = queryExecutor.executeList(queryItems);
+		 @SuppressWarnings("unchecked")
+		 List<? extends U> list = queryExecutor.executList((T)this);
 		 if(!list.isEmpty()){
 			 List<U> retList=new ArrayList<U>(list.size());
 			 for (U u : list) {
