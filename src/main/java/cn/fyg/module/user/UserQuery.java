@@ -1,7 +1,6 @@
-package cn.fyg.user.service;
+package cn.fyg.module.user;
 
-import cn.fyg.user.domain.model.User;
-import cn.fyg.user.infrastructure.query.Query;
+import cn.fyg.module.user.query.Query;
 
 
 public interface UserQuery extends Query<UserQuery,User>  {

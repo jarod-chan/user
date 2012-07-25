@@ -1,4 +1,5 @@
-package cn.fyg.user.infrastructure.query.impl;
+package cn.fyg.module.user.query;
+
 
 
 
@@ -12,11 +13,6 @@ public class QueryItem {
 		this.queryEnum = queryEnum;
 		this.attribute = attribute;
 		this.value=value;
-	}
-	
-	public QueryItem(QueryEnum queryEnum, String attribute) {
-		this.queryEnum = queryEnum;
-		this.attribute = attribute;
 	}
 
 	public QueryEnum queryEnum() {

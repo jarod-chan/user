@@ -41,6 +41,6 @@
         p:dataSource-ref="dataSource"/>
 
     <!-- scan components with annotations -->
-    <context:component-scan base-package="cn.fyg.user"/>
+    <context:component-scan base-package="cn.fyg.module.user"/>
 
 </beans>

@@ -1,4 +1,4 @@
-package cn.fyg.user.service;
+package cn.fyg.module.user;
 
 
 public class UserException extends RuntimeException {
