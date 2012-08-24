@@ -29,5 +29,15 @@ public class StringList {
 	public int count(){
 		return this.stringlist.size();
 	}
+	
+	public StringList push(String key){
+		this.stringlist.add(key);
+		return this;
+	}
+	
+	public StringList pop(){
+		this.stringlist.remove(this.stringlist.size()-1);
+		return this;
+	}
 
 }

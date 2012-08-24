@@ -46,16 +46,39 @@ public class GroupRepositoryImpl implements GroupRepository {
 		String oldCode=entityManager.find(GroupEntity.class, groupEntity.getKey()).getCode();
 		String newCode=groupEntity.getCode();
 		
+		updateGroupCode(oldCode, newCode);
+		updateMembershipCode(oldCode,newCode);
+		
+		return entityManager.merge(groupEntity);
+	}
+
+	private void updateMembershipCode(String oldCode, String newCode) {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MembershipEntity> query = builder.createQuery(MembershipEntity.class);
+		Root<MembershipEntity> from = query.from(MembershipEntity.class);
+		query.where(
+				builder.or(
+						builder.equal(from.get(MembershipEntity_.code), oldCode),
+						builder.like(from.get(MembershipEntity_.code), oldCode+".%")
+						)
+					);
+		List<MembershipEntity> result = entityManager.createQuery(query).getResultList();
+		for (MembershipEntity membershipEntity : result) {
+			membershipEntity.setCode(membershipEntity.getCode().replace(oldCode, newCode));
+		}
+	}
+
+	private void updateGroupCode(String oldCode, String newCode) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<GroupEntity> query = builder.createQuery(GroupEntity.class);
 		Root<GroupEntity> from = query.from(GroupEntity.class);
-		Predicate criteria=builder.like(from.get(GroupEntity_.code), oldCode+".%");
-		query.where(criteria);
+		query.where(
+				builder.like(from.get(GroupEntity_.code), oldCode+".%")
+				);
 		List<GroupEntity> groups = entityManager.createQuery(query).getResultList();
 		for (GroupEntity group : groups) {
 			group.setCode(group.getCode().replace(oldCode, newCode));
-		}	
-		return entityManager.merge(groupEntity);
+		}
 	}
 
 }

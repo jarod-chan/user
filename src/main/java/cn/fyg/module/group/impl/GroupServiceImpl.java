@@ -1,7 +1,10 @@
 package cn.fyg.module.group.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,10 +104,14 @@ public class GroupServiceImpl implements GroupService {
 	public StringList parentUserKey(String groupKey,String userKey,int parentLevel) {
 		GroupEntity groupEntity = groupRepository.find(groupKey);
 		String rootCode=groupEntity.getCode();
-		MembershipEntity membershipEntity=membershipRepository.findMaxCodeLikeGroupKeyAndUserKey(rootCode+SEPARATE, userKey);
+		MembershipEntity membershipEntity=membershipRepository.findMaxCodeLikeGroupKeyAndUserKey(rootCode, userKey);
 		String code=(membershipEntity==null?"":membershipEntity.getCode());
 		if(!isLegalCode(rootCode,code,parentLevel)){
 			throw new RuntimeException(String.format("code compute error.rootcode:[%s] code[%s]",rootCode,code));
+		}
+		
+		if(parentLevel==0){
+			return new StringList(new ArrayList<String>());
 		}
 		
 		String targetCode = computeTargetCode(parentLevel, code);
@@ -146,7 +153,7 @@ public class GroupServiceImpl implements GroupService {
 	public List<StringList> reportLine(String groupKey, String userKey) {
 		GroupEntity groupEntity = groupRepository.find(groupKey);
 		String rootCode=groupEntity.getCode();
-		MembershipEntity membershipEntity=membershipRepository.findMaxCodeLikeGroupKeyAndUserKey(rootCode+SEPARATE, userKey);
+		MembershipEntity membershipEntity=membershipRepository.findMaxCodeLikeGroupKeyAndUserKey(rootCode, userKey);
 		String code=(membershipEntity==null?"":membershipEntity.getCode());
 		if(!isLegalCode(rootCode,code,0)){
 			throw new RuntimeException(String.format("code compute error.rootcode:[%s] code[%s]",rootCode,code));
@@ -155,33 +162,42 @@ public class GroupServiceImpl implements GroupService {
 		//获得所有编码
 		List<String> codeList=new ArrayList<String>();
 		String targetCode=code;
-		codeList.add(targetCode);
-		do{
-			targetCode=StringUtils.substringBeforeLast(targetCode, SEPARATE);
+		
+		while(!rootCode.equals(targetCode)){
+			targetCode=StringUtils.substringBeforeLast(targetCode, SEPARATE);	
 			codeList.add(targetCode);
-		}while(!rootCode.equals(targetCode));
+		}
 		
 		System.out.println(codeList);
 		
 		List<MembershipEntity> membershipEntitys = membershipRepository.findByCodeList(codeList);
-		return formatResult(membershipEntitys);
+		Map<String,StringList> codeMap=getCodeMap(membershipEntitys);
+
+		List<StringList> result = new ArrayList<StringList>();
+		appendFirstToResult(userKey,result);
+		appendMapToResult(codeList,codeMap,result);
+		return result;
 	}
 
-	//封装结果集的返回形式
-	private List<StringList> formatResult(
-			List<MembershipEntity> membershipEntitys) {
-		List<StringList> result=new ArrayList<StringList>();
-		if(membershipEntitys.size()>0){
-			String flagCode="";
-			List<String> userKeyList=null;
-			for (MembershipEntity membershipEntity : membershipEntitys) {
-				if(flagCode!=membershipEntity.getCode()){
-					flagCode=membershipEntity.getCode();
-					userKeyList=new ArrayList<String>();
-					result.add(new StringList(userKeyList));
-				}
-				userKeyList.add(membershipEntity.getUserKey());
+	private void appendMapToResult(List<String> codeList,Map<String, StringList> codeMap, List<StringList> result) {
+		for (String code : codeList) {
+			StringList stringList=codeMap.get(code);
+			result.add(stringList==null?new StringList(new ArrayList<String>()):stringList);
+		}
+	}
+
+	private void appendFirstToResult(String userKey, List<StringList> result) {
+		result.add(new StringList(Arrays.asList(userKey)));
+	}
+
+	private Map<String, StringList> getCodeMap(List<MembershipEntity> membershipEntitys) {
+		Map<String,StringList> result=new HashMap<String,StringList>();
+		for (MembershipEntity membershipEntity : membershipEntitys) {
+			String code=membershipEntity.getCode();
+			if(!result.keySet().contains(code)){
+				result.put(code, new StringList(new ArrayList<String>()));
 			}
+			result.get(code).push(membershipEntity.getUserKey());	
 		}
 		return result;
 	}

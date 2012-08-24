@@ -3,6 +3,7 @@ package cn.fyg.user.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
@@ -113,6 +114,49 @@ public class GruopServiceTest {
 		
 	}
 	
+	@Test
+	public void updateGroup(){
+		Group group = groupService.createGroup();
+		group.setKey("jz");
+		group.setName("建筑");
+		group.setParent(null);
+		groupService.saveGroup(group);
+		
+		Group gm=groupService.findGroup("gm");
+		gm.setParent(group);
+		groupService.saveGroup(gm);
+	}
+	
+	@Test
+	public void teatAfterUpdate(){
+		Group gm=groupService.findGroup("gm");
+		assertEquals("jz",gm.getParent().getKey());
+		
+		String jz="jz";
+		String parent=groupService.parentUserKey(jz, "mao",2).single();
+		assertEquals("mou",parent);
+		
+		groupService.createMembership("t1", "jz");
+		groupService.createMembership("t2", "jz");
+		
+		
+		List<StringList> reportLine = groupService.reportLine(jz, "mao");
+		assertEquals(4,reportLine.size());
+		assertEquals(Arrays.asList("t1","t2"),reportLine.get(3).list());
+		
+		
+	}
+	
+	@Test 
+	public void testSepecial(){
+		String jz="jz";
+		try{
+			groupService.reportLine(jz, "mao1");
+		}catch(Exception e){
+			assertNotNull(e);
+		}
+		
+	}
 
 
 }

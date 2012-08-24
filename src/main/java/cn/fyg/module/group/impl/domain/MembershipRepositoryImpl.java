@@ -93,7 +93,10 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 		CriteriaQuery<MembershipEntity> query = builder.createQuery(MembershipEntity.class);
 		Root<MembershipEntity> from = query.from(MembershipEntity.class);
 		query.where(
-				builder.like(from.get(MembershipEntity_.code), rootCode+"%"),
+				builder.or(						
+						builder.equal(from.get(MembershipEntity_.code), rootCode),
+						builder.like(from.get(MembershipEntity_.code), rootCode+".%")
+						),
 				builder.equal(from.get(MembershipEntity_.userKey), userKey)
 				)
 			.orderBy(
