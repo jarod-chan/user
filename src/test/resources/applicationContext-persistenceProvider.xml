@@ -4,8 +4,11 @@
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd 
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd ">
 
     <!-- enable property injection -->
     <context:property-placeholder location="classpath:datasource.properties"/>
@@ -39,8 +42,12 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
         p:entityManagerFactory-ref="entityManagerFactory"
         p:dataSource-ref="dataSource"/>
+    
+    <!-- Spring Data Jpa配置 -->
+	<jpa:repositories base-package="cn.fyg.module" transaction-manager-ref="transactionManager" 
+	entity-manager-factory-ref="entityManagerFactory" />
 
     <!-- scan components with annotations -->
-    <context:component-scan base-package="cn.fyg.module.user"/>
+    <context:component-scan base-package="cn.fyg.module"/>
 
 </beans>
