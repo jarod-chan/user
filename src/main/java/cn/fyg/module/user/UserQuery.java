@@ -5,7 +5,7 @@ import cn.fyg.module.user.query.Query;
 
 public interface UserQuery extends Query<UserQuery,User>  {
 	
-	UserQuery username();
+	UserQuery userKey();
 
 	UserQuery realname();
 

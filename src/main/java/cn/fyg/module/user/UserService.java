@@ -22,13 +22,13 @@ public interface UserService {
 	 * 启用一个用户
 	 * @param id
 	 */
-	void enableUser(String id); 
+	void enableUser(Long id); 
 	
 	/**
 	 * 禁用一个用户
 	 * @param id
 	 */
-	void disableUser(String id);
+	void disableUser(Long id);
 	
 	/**
 	 * 校验用户登录名，用户密码
@@ -37,14 +37,14 @@ public interface UserService {
 	 * @return userid 用户id
 	 * @throws UserException 如果登录失败，则抛出UserException
 	 */
-	String login(String key,String password);
+	Long login(String key,String password);
 	
 	/**
 	 * 根据用户id，返回用户信息
 	 * @param id
 	 * @return User
 	 */
-	User findById(String id);
+	User find(Long id);
 	
 	/**
 	 * 查询用户

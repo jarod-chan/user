@@ -27,7 +27,7 @@ public class UserServiceTest {
 	@Test
 	public void testSave(){
 		User user1=userService.createUser();
-		user1.setUsername("user1");
+		user1.setUserKey("user1");
 		user1.setRealname("陈1");
 		user1.setPassword("pwd111");
 		user1.setEmail("user1@gmail.com");
@@ -35,15 +35,15 @@ public class UserServiceTest {
 		userService.saveUser(user1);
 		
 		User user2=userService.createUser();
-		user2.setUsername("user2");
+		user2.setUserKey("user2");
 		user2.setRealname("周2");
 		user2.setPassword("pwd222");
 		user2.setEmail("user2@gmail.com");
 		user2.setCellphone("13812341234");
 		userService.saveUser(user2);
 		
-		assertNotNull(userService.findById(1L+""));
-		assertNotNull(userService.findById(2L+""));
+		assertNotNull(userService.find(1L));
+		assertNotNull(userService.find(2L));
 		
 		
 		userService.saveUser(user2);
@@ -53,7 +53,7 @@ public class UserServiceTest {
 	public void login(){
 		String key="user1";
 		String password="pwd111";
-		String  id=userService.login(key, password);
+		Long  id=userService.login(key, password);
 		assertNotNull(id);
 	}
 	
@@ -72,7 +72,7 @@ public class UserServiceTest {
 	@Test 
 	public void testSaveFail(){
 		User user1=userService.createUser();
-		user1.setUsername("user1");
+		user1.setUserKey("user1");
 		user1.setRealname("陈");
 		user1.setPassword("pwd");
 		user1.setEmail("user1gmail.com");
@@ -89,40 +89,40 @@ public class UserServiceTest {
 	@Test
 	public void testQuery(){
 		List<User> users=userService.createQuery()
-				.username().like("use%").equal("user").desc()
+				.userKey().like("use%").equal("user").desc()
 				.cellphone().equal("123").asc()
 				.list();
 		assertTrue(users.isEmpty());
-		List<User> user2=userService.createQuery().username().equal("user1")
+		List<User> user2=userService.createQuery().userKey().equal("user1")
 				.list();
 		assertNotNull(user2.get(0));
 	}
 	
 	@Test
 	public void testQuery2(){
-		List<User> users=userService.createQuery().username().like("u%").max(2).list();
+		List<User> users=userService.createQuery().userKey().like("u%").max(2).list();
 		assertEquals(2, users.size());
 	}
 	
 	@Test
 	public void testEnable(){
-		String id="1";
-		User user = userService.findById(id);
+		Long id=1L;
+		User user = userService.find(id);
 		assertFalse(user.isEnabled());
 		userService.enableUser(id);
-		user = userService.findById(id);
+		user = userService.find(id);
 		assertTrue(user.isEnabled());
 	}
 	
 	@Test
 	public void testPassword(){
-		String id="1";
-		User user = userService.findById(id);
+		Long id=1L;
+		User user = userService.find(id);
 		user.setPassword("pwd222");
 		userService.saveUser(user);
 		String key="user1";
 		String password="pwd222";
-		String retId=userService.login(key, password);
+		Long retId=userService.login(key, password);
 		assertNotNull(retId);
 	}
 	

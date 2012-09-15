@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public String login(String key, String password) {
+	public Long login(String key, String password) {
 		List<UserEntity> users=userEntityRepository.findByKey(key);
 		if(users.isEmpty()){
 			throw new UserException(String.format("can't find user by key:%s",key));
@@ -60,11 +60,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User findById(String id) {
+	public User find(Long id) {
 		if(id==null){
-			throw new NullPointerException("id is null");
+			throw new NullPointerException("param id is null");
 		}
-		return userEntityRepository.find(Long.valueOf(id));
+		return userEntityRepository.find(id);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public void enableUser(String id) {
+	public void enableUser(Long id) {
 		if(id==null){
 			throw new NullPointerException("id is null");
 		}
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public void disableUser(String id) {
+	public void disableUser(Long id) {
 		if(id==null){
 			throw new NullPointerException("id is null");
 		}

@@ -1,20 +1,21 @@
 package cn.fyg.module.user.impl.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-import org.apache.commons.lang.StringUtils;
-
-import cn.fyg.module.user.User;
-
 import net.sf.oval.constraint.Email;
 import net.sf.oval.constraint.Length;
 import net.sf.oval.constraint.MatchPattern;
 import net.sf.oval.constraint.NotNull;
 import net.sf.oval.constraint.ValidateWithMethod;
+
+import org.apache.commons.lang.StringUtils;
+
+import cn.fyg.module.user.User;
 
 @Entity
 public class UserEntity implements User {
@@ -25,8 +26,9 @@ public class UserEntity implements User {
 	
 	@NotNull(message="用户名不能为空")
 	@Length(min=2,max=10,message="用户名长度在{min}和{max}之间")
-	private String username;//用户名
-	
+	@Column(unique=true)
+	private String userKey;//用户名
+
 	@NotNull(message="真实姓名不能为空")
 	@Length(min=2,max=10,message="真实姓名长度在{min}和{max}之间")
 	private String realname;//真实姓名
@@ -101,26 +103,20 @@ public class UserEntity implements User {
 		return this.password.equals(comparePassword);
 	}
 	
-
-	public String getId() {
-		if(id==null) return null;
-		return id.toString();
+	public Long getId() {
+		return id;
 	}
 
-	public void setId(String id) {
-		if(id==null){
-			this.id=null;
-			return;
-		}
-		this.id = Long.valueOf(id);
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserKey() {
+		return userKey;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
 	}
 
 	public String getRealname() {
