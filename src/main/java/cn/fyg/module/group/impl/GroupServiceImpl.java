@@ -31,7 +31,8 @@ public class GroupServiceImpl implements GroupService {
 	
 	@Override
 	public Group createGroup() {
-		return new GroupEntity();
+		GroupEntity groupEntity = new GroupEntity();
+		return groupEntity;
 	}
 
 	@Override
@@ -44,11 +45,14 @@ public class GroupServiceImpl implements GroupService {
 			code=parentEntity.getCode()+SEPARATE+code;
 		}
 		groupEntity.setCode(code);
-		
-		if(!groupRepository.isExist(group.getKey())){				
-			return groupRepository.persistent(groupEntity);
+		if(groupRepository.isConflict(groupEntity)){
+			throw new RuntimeException("组织编码不能重复");
 		}
-		return groupRepository.update(groupEntity);
+		
+		if(groupEntity.getUuid()!=null){				
+			return groupRepository.update(groupEntity);
+		}
+		return groupRepository.persistent(groupEntity);
 	}
 
 	@Override

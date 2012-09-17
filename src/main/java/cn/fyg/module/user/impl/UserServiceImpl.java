@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public Long login(String key, String password) {
+	public String login(String key, String password) {
 		List<UserEntity> users=userEntityRepository.findByKey(key);
 		if(users.isEmpty()){
 			throw new UserException(String.format("can't find user by key:%s",key));
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService{
 		if(!user.checkPassword(password)){
 			throw new UserException(String.format("password not match key:%s password:%s", key,password));
 		}
-		return user.getId();
+		return user.getKey();
 		
 	}
 
@@ -53,18 +53,18 @@ public class UserServiceImpl implements UserService{
 		UserEntity userEntity=(UserEntity)user;
 		UserEntityValidator.validate(userEntity);
 		userEntity.encryptionPassword();
-		if(userEntityRepository.multiUser(userEntity)){
+		if(userEntityRepository.isConflict(userEntity)){
 			throw new UserException("存在重复账户");
 		}
 		return userEntityRepository.save(userEntity);
 	}
 
 	@Override
-	public User find(Long id) {
-		if(id==null){
+	public User findUser(String key) {
+		if(key==null){
 			throw new NullPointerException("param id is null");
 		}
-		return userEntityRepository.find(id);
+		return userEntityRepository.find(key);
 	}
 
 	@Override
@@ -75,22 +75,22 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	@Transactional
-	public void enableUser(Long id) {
-		if(id==null){
-			throw new NullPointerException("id is null");
+	public void enableUser(String key) {
+		if(key==null){
+			throw new NullPointerException("key is null");
 		}
-		UserEntity userEntity = userEntityRepository.find(Long.valueOf(id));
+		UserEntity userEntity = userEntityRepository.find(key);
 		userEntity.setEnabled(Boolean.TRUE);
 	}
 
 
 	@Override
 	@Transactional
-	public void disableUser(Long id) {
-		if(id==null){
-			throw new NullPointerException("id is null");
+	public void disableUser(String key) {
+		if(key==null){
+			throw new NullPointerException("key is null");
 		}
-		UserEntity userEntity = userEntityRepository.find(Long.valueOf(id));
+		UserEntity userEntity = userEntityRepository.find(key);
 		userEntity.setEnabled(Boolean.FALSE);
 	}
 

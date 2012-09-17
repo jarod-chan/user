@@ -19,11 +19,14 @@ public class GroupRepositoryImpl implements GroupRepository {
 	private EntityManager entityManager;
 
 	@Override
-	public boolean isExist(String key) {
+	public boolean isConflict(GroupEntity groupEntity) {
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<GroupEntity> query = builder.createQuery(GroupEntity.class);
 		Root<GroupEntity> from = query.from(GroupEntity.class);
-		Predicate criteria=builder.equal(from.get(GroupEntity_.Key), key);
+		Predicate criteria=builder.equal(from.get(GroupEntity_.key), groupEntity.getKey());
+		if(groupEntity.getUuid()!=null){
+			criteria=builder.and(criteria,builder.notEqual(from.get(GroupEntity_.uuid), groupEntity.getUuid()));
+		}
 		query.where(criteria);
 		List<GroupEntity> resultList = entityManager.createQuery(query).getResultList();
 		return !resultList.isEmpty();

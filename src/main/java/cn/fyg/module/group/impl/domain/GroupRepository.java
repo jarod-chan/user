@@ -2,7 +2,7 @@ package cn.fyg.module.group.impl.domain;
 
 public interface GroupRepository  {
 	
-	boolean isExist(String key);
+	boolean isConflict(GroupEntity groupEntity);
 	
 	GroupEntity find(String key);
 	

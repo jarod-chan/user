@@ -10,12 +10,12 @@ import cn.fyg.module.user.query.QueryExecutor;
 
 public interface UserEntityRepository extends QueryExecutor<UserQuery,User> {
 
-	UserEntity find(Long id);
+	UserEntity find(String key);
 	
 	UserEntity save(UserEntity user);
 
 	List<UserEntity> findByKey(String key);
 
-	boolean multiUser(UserEntity user);
+	boolean isConflict(UserEntity user);
 
 }

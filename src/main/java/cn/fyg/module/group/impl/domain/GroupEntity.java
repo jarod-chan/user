@@ -1,9 +1,12 @@
 package cn.fyg.module.group.impl.domain;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 
 import cn.fyg.module.group.Group;
 
@@ -11,7 +14,7 @@ import cn.fyg.module.group.Group;
 public class GroupEntity implements Group {
 	
 	@Id
-	private String Key;
+	private String key;//编码，用于外部调用
 	
 	private String name;
 	
@@ -19,16 +22,23 @@ public class GroupEntity implements Group {
 	@JoinColumn(name = "parent_id")
 	private Group parent;
 	
-	private String code;
+	private String code;//编码，用于内部计算
+	
+	private String uuid;//用于代替id，不作为主键
+	
+	@PrePersist
+	public void prePersist(){
+        this.uuid=UUID.randomUUID().toString();
+    }
 
 	@Override
 	public String getKey() {
-		return Key;
+		return key;
 	}
 
 	@Override
 	public void setKey(String key) {
-		Key = key;
+		this.key = key;
 	}
 
 	@Override
@@ -58,7 +68,13 @@ public class GroupEntity implements Group {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 	
 }

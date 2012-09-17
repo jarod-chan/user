@@ -19,32 +19,32 @@ public interface UserService {
 	User saveUser(User user);
 	
 	/**
+	 * 根据用户id，返回用户信息
+	 * @param id
+	 * @return User
+	 */
+	User findUser(String key);
+	
+	/**
 	 * 启用一个用户
 	 * @param id
 	 */
-	void enableUser(Long id); 
+	void enableUser(String key); 
 	
 	/**
 	 * 禁用一个用户
 	 * @param id
 	 */
-	void disableUser(Long id);
+	void disableUser(String key);
 	
 	/**
 	 * 校验用户登录名，用户密码
 	 * @param key 用户名、邮箱、电话号码
 	 * @param password 密码
-	 * @return userid 用户id
+	 * @return userkey 用户key
 	 * @throws UserException 如果登录失败，则抛出UserException
 	 */
-	Long login(String key,String password);
-	
-	/**
-	 * 根据用户id，返回用户信息
-	 * @param id
-	 * @return User
-	 */
-	User find(Long id);
+	String login(String key,String password);
 	
 	/**
 	 * 查询用户

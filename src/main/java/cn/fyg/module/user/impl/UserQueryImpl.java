@@ -15,7 +15,7 @@ public class UserQueryImpl extends AbstractQuery<UserQuery,User> implements User
 
 	@Override
 	public UserQuery userKey() {
-		this.attribute=UserEntity_.userKey.getName();
+		this.attribute=UserEntity_.key.getName();
 		return this;
 	}
 
